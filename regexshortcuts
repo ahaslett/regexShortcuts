@@ -1,0 +1,131 @@
+ ____  _____ ____ _______  __  ____  _                _             _       
+|  _ \| ____/ ___| ____\ \/ / / ___|| |__   ___  _ __| |_ ___ _   _| |_ ___ 
+| |_) |  _|| |  _|  _|  \  /  \___ \| '_ \ / _ \| '__| __/ __| | | | __/ __|
+|  _ <| |__| |_| | |___ /  \   ___) | | | | (_) | |  | || (__| |_| | |_\__ \
+|_| \_\_____\____|_____/_/\_\ |____/|_| |_|\___/|_|   \__\___|\__,_|\__|___/
+
+
+#####  If you've ever opened a file without doing sudo first and don't want to quit, redo the changes, and then save.
+#####  This will save the file using sudo
+:w !sudo tee %
+
+
+=====================================
+# regex for finding urls
+=====================================
+https?:\/\/(www\.)?
+
+grep -Eio "https?:\/\/(www\.)?.*?\"" EXAMPLE.csv
+
+=====================================
+# pulling the whole URL. 
+# havnet found it to work that well yet. I use the above usually
+=====================================
+https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)
+
+
+=====================================
+# pulling IP addresses
+=====================================
+'/\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]).){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b/ig'
+
+
+=====================================
+# pull IP the easy way
+=====================================
+ifconfig | grep inet | cut -d ' ' -f1-2 | grep -Ei '(192|172|10)'	
+
+
+=====================================
+# grep IP address from file
+=====================================
+grep -Eio "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" BLLAH.csv
+
+
+=====================================
+# grep date and time in format YYYY-MM-DD SPACE TIME:TIME:TIME
+=====================================
+grep -Eio "(\d{4})-(\d{2})-(\d{2})\W?(\d{2}):(\d{2}):(\d{2})?" alarms.csv| xargs -I{} printf "{} \n"
+
+
+=====================================
+# parse a log file by replacing commas with semi 
+=====================================
+tr ',' ';' < input.csv > output.csv
+
+=====================================
+# parse a log file by finding all { and replacing with a new line
+=====================================
+tr { '\n' < testing >> testingnew
+tr '[[:blank:]]' '\n' < testing
+
+=====================================
+# replace all whitespace with a new LINE
+=====================================
+sed -E -e 's/[[:blank:]]+/\n/g'
+
+sed -E -e 's/[[:blank:]]u/\n/g'
+
+
+
+
+tr '{' '\n' && tr ',' '\n' < testing 
+
+# BASH LOOPING 
+while read p; do
+  grep -E 'event_type | file_path | source_address | destination_address'   
+  echo "+++++++++=================+++++++++"
+done <testing  
+
+=====================================
+# this pulled 1100 events
+=====================================
+events?page=0&size=5000&sort=timestamp_occured,desc
+
+
+
+=====================================
+# then run this to parse easier
+=====================================
+tr '{' '\n'
+tr ',' '\n'
+
+
+=====================================
+# then grep for your field
+=====================================
+grep -Ee 'event_type| file_path | source_address | destination_address' FILE | sort -u
+
+
+
+=====================================
+#remove blank lines
+=====================================
+grep -Ev "(\W)?u\'(.*)_?(.*)?\'$" testing
+
+
+
+=====================================
+ URL ENCODING in command line 
+=====================================
+ 
+python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1]))" 'STRING'
+
+
+=====================================
+pull the names from Logrhythm and
+reverse sort and count the uniques
+=====================================
+
+
+sed -e 's|["'\"']||g' 01_22_2020-LogRhythm_WebLogsExport.csv | awk -F"," "{print $61}" | sort -nr | uniq -c
+
+=====================================
+The two curl commands below are for pulling HTML 
+=====================================
+
+curl -s https://attack.mitre.org/techniques/T1175/ | ./pup --color '.container-fluid text{}' | tr -d '\011\012\015' | tr ' ' '\n' 
+
+
+curl -s https://attack.mitre.org/techniques/T1175/ | ./pup --color '.container-fluid text{}' | tr -d '\011\012\015' | tr ' ' '\n' | tr '\n' ' '
+
