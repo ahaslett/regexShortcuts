@@ -49,15 +49,23 @@ grep -Eio "(\d{4})-(\d{2})-(\d{2})\W?(\d{2}):(\d{2}):(\d{2})?" alarms.csv| xargs
 
 
 =====================================
-# parse a log file by replacing commas with semi 
+# Replace comma's with semicolons
 =====================================
 tr ',' ';' < input.csv > output.csv
 
+
+
 =====================================
-# parse a log file by finding all { and replacing with a new line
+# find symbol and replace with newline
 =====================================
 tr { '\n' < testing >> testingnew
+
 tr '[[:blank:]]' '\n' < testing
+
+sed 's/regexp/\'$'\n/g'
+
+sed $'s/regexp/\\\n/g'
+
 
 =====================================
 # replace all whitespace with a new LINE
@@ -66,6 +74,7 @@ sed -E -e 's/[[:blank:]]+/\n/g'
 
 sed -E -e 's/[[:blank:]]u/\n/g'
 
+tr '[[:blank:]]' '\n' < testing
 
 
 
