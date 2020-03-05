@@ -9,6 +9,10 @@
 #####  This will save the file using sudo
 :w !sudo tee %
 
+while read p; do
+  echo "$p"
+done <peptides.txt
+
 
 =====================================
 # regex for finding urls
