@@ -13,6 +13,17 @@ while read p; do
   echo "$p"
 done <peptides.txt
 
+========================================
+# comparing 2 lists of IP's to print 
+# what lines are similar. 
+========================================
+# Run this in vim first to make sure there is no extra whitespace
+
+:%s/\s\+$//e
+
+# then in terminal run
+
+comm -1 -2 <(sort list1) <(sort list2)
 
 =====================================
 # regex for finding urls
