@@ -5,13 +5,28 @@
 |_| \_\_____\____|_____/_/\_\ |____/|_| |_|\___/|_|   \__\___|\__,_|\__|___/
 
 
-#####  If you've ever opened a file without doing sudo first and don't want to quit, redo the changes, and then save.
-#####  This will save the file using sudo
+
+==========================
+VIM - Save file opened in 
+read only mode
+==========================
 :w !sudo tee %
 
+============================
+How to Do Loops in Bash on
+a text file
+============================
 while read p; do
   echo "$p"
 done <peptides.txt
+
+============================
+The following grep will pull
+base64 extracted strings from
+a file.
+============================
+grep -E '[A-Za-z0-9+/]{4}*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)'
+
 
 ========================================
 # comparing 2 lists of IP's to print 
