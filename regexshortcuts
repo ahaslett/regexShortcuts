@@ -20,6 +20,17 @@ while read p; do
   echo "$p"
 done <peptides.txt
 
+========================
+REMOVE EXTRA WHITESPACE
+========================
+:%s/\s\+$//e
+
+================================================
+COMPARE 2 LISTS AND AND PRINT THE DUPLICATES
+================================================
+comm -1 -2 <(sort list1) <(sort list2)
+
+
 ============================
 The following grep will pull
 base64 extracted strings from
